@@ -2,14 +2,13 @@
   <div>
     <div style="text-align: center">
       <el-transfer
-        style="text-align: left; display: inline-block"
+        class="transfer"
         v-model="value"
         filterable
-        :left-default-checked="[2, 3]"
-        :right-default-checked="[1]"
+        style="text-align: left; display: inline-block"
         :render-content="renderFunc"
         :titles="['未完成', '已完成']"
-        :button-texts="['到左边', '到右边']"
+        :button-texts="['撤销', '完成']"
         :format="{
         noChecked: '${total}',
         hasChecked: '${checked}/${total}'
@@ -33,23 +32,22 @@ export default {
     TodoListItem
   },
   data () {
-    const generateData = _ => {
-      const data = []
-      for (let i = 1; i <= 15; i++) {
-        data.push({
-          key: i,
-          label: `备选项 ${i}`,
-          disabled: i % 4 === 0
-        })
-      }
-      return data
-    }
     return {
-      data: generateData(),
-      value: [1],
-      value4: [1],
+      data: [{
+        key: 0,
+        label: '洗碗'
+      },
+      {
+        key: 1,
+        label: '扫地'
+      },
+      {
+        key: 2,
+        label: '洗衣服'
+      }],
+      value: [],
       renderFunc (h, option) {
-        return <span>{option.key} - {option.label}</span>
+        return <span>{option.label}</span>
       }
     }
   },

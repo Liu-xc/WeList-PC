@@ -6,9 +6,30 @@
       <el-divider></el-divider>
       <span class="slogan text-info">To The Future, Step by Step</span>
     </header>
-    <router-view class="container-70" />
+    <router-view class="container-70" v-if="logStatus" />
+    <log-or-reg v-if="!logStatus" class="log-btn"></log-or-reg>
   </div>
 </template>
+
+<script>
+import LogOrReg from './components/LogOrReg'
+import { mapGetters } from 'vuex'
+
+export default {
+  components: {
+    LogOrReg
+  },
+  data () {
+    return {
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'logStatus'
+    ])
+  }
+}
+</script>
 
 <style lang="stylus">
 @import './assets/globalClass.styl'
@@ -24,4 +45,8 @@
 
   .slogan
     font-size 1rem
+
+.log-btn
+  text-align center
+  margin-top 15%
 </style>
