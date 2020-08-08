@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-tabs class="tabs">
+    <el-tabs class="tabs" tab-position="left">
       <el-tab-pane label="任务">
         <todo-list></todo-list>
       </el-tab-pane>
