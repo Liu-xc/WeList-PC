@@ -13,4 +13,21 @@ router.get('/', async (ctx, next)=>{
   await next()
 })
 
-module.exports = Compose([router.routes(), dailyLogRoutes.routes(), userinfoRoutes.routes(), shareRoutes.routes(), editRoutes.routes(), todoRoutes.routes()])
+router.get('/login', async (ctx, next)=>{
+  console.log(ctx.request.query)
+  await next()
+})
+
+router.get('/register', async (ctx, next)=>{
+  console.log(ctx.request.query)
+  await next()
+})
+
+module.exports = Compose([
+  router.routes(),
+  dailyLogRoutes.routes(),
+  userinfoRoutes.routes(),
+  shareRoutes.routes(),
+  editRoutes.routes(),
+  todoRoutes.routes()
+])

@@ -11,11 +11,6 @@ app.use(BodyParser())
 app.use(Static(path.join(__dirname, './welist_fe/dist')))
 app.use(Views(path.join(__dirname, './welist_fe/dist'), {extension: 'html'}))
 
-// app.use(async (ctx, next)=>{
-//   await ctx.render('index')
-//   await next()
-// })
-
 app.use(router)
 
 app.listen(3000)
