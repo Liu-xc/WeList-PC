@@ -11,7 +11,7 @@ export default new Vuex.Store({
     todoItemToEdit: {},
     logItemToEdit: {},
     shareItemToEdit: {},
-    logStatus: true
+    logStatus: false
   },
   mutations,
   actions,

@@ -26,14 +26,14 @@ function checkPass (rule, value, callback) {
 
 function recheckPass (component) {
   const _that = component
-  console.log(_that.registerForm)
+  console.log(_that.form)
   // 函数柯里化
   return (rule, value, callback) => {
     if (!value) {
       callback(new Error('请再次输入密码'))
     }
-    if (value !== _that.registerForm.pass) {
-      console.log(_that.registerForm.pass)
+    if (value !== _that.form.password) {
+      console.log(_that.form.password)
       callback(new Error('两次密码不一致'))
     }
     callback()
