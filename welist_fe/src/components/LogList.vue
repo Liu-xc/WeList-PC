@@ -30,12 +30,16 @@
 <script>
 import LogListItem from './LogListItem'
 import HandleOrLike from './HandleOrLike'
+import TransTimeStamp from '../utils/transTimeStamp.js'
 
 export default {
   name: 'LogList',
   components: {
     LogListItem,
     HandleOrLike
+  },
+  mounted () {
+    TransTimeStamp(Date.now())
   }
 }
 </script>

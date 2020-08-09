@@ -1,5 +1,5 @@
-function logStatus (state) {
-  return state.logStatus
+export default {
+  logStatus: function (state) {
+    return state.logStatus
+  }
 }
-
-export { logStatus }

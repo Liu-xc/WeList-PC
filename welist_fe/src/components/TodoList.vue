@@ -34,20 +34,17 @@ export default {
   data () {
     return {
       data: [{
-        key: 0,
         label: '洗碗'
       },
       {
-        key: 1,
         label: '扫地'
       },
       {
-        key: 2,
         label: '洗衣服'
       }],
       value: [],
       renderFunc (h, option) {
-        return <span>{option.label}</span>
+        return <span class="">{option.label}</span>
       }
     }
   },
