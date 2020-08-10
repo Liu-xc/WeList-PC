@@ -1,18 +1,11 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = new Sequelize('mysql://root@localhost:3306/welist')
 
-const UserPass = sequelize.define("userpass", {
-  pass: {
-    type: DataTypes.TEXT
-  }
-})
 
 const User = sequelize.define("user", {
-  uid: {
-    type: DataTypes.INTEGER,
+  uname: {
     primaryKey: true,
-    autoIncrement: true,
-    unique: true
+    type: DataTypes.STRING(15)
   },
   motto: {
     type: DataTypes.TEXT
@@ -25,6 +18,20 @@ const User = sequelize.define("user", {
   },
   sex: {
     type: DataTypes.INTEGER
+  }
+})
+
+const UserPass = sequelize.define("userpass", {
+  uname: {
+    primaryKey: true,
+    type: DataTypes.STRING(15),
+    references: {
+      model: User,
+      key: 'uname'
+    }
+  },
+  pass: {
+    type: DataTypes.TEXT
   }
 })
 
@@ -48,10 +55,7 @@ const Todo = sequelize.define("todo", {
   },
   ctime: {
     type: DataTypes.TEXT
-  },
-  uid: {
-    type: DataTypes.TEXT
-  }  
+  }
 })
 
 const Dailylog = sequelize.define("dailylog", {
@@ -63,18 +67,9 @@ const Dailylog = sequelize.define("dailylog", {
   title: {
     type: DataTypes.TEXT
   },
-  desc: {
+  content: {
     type: DataTypes.TEXT
-  },
-  ctime: {
-    type: DataTypes.DATE
-  },
-  lastmodified: {
-    type: DataTypes.DATE
-  },
-  uid: {
-    type: DataTypes.TEXT
-  }  
+  }
 })
 
 const Share = sequelize.define("share", {
@@ -86,16 +81,7 @@ const Share = sequelize.define("share", {
   title: {
     type: DataTypes.TEXT
   },
-  desc: {
-    type: DataTypes.TEXT
-  },
-  ctime: {
-    type: DataTypes.DATE
-  },
-  lastmodified: {
-    type: DataTypes.DATE
-  },
-  uid: {
+  content: {
     type: DataTypes.TEXT
   }
 })
@@ -108,11 +94,11 @@ const LikeShare = sequelize.define("likeshare", {
       key: 'shareid'
     }
   },
-  uid: {
-    type: DataTypes.INTEGER,
+  uname: {
+    type: DataTypes.STRING(15),
     references: {
       model: User,
-      key: 'uid'
+      key: 'uname'
     }
   }
 })
@@ -120,19 +106,13 @@ const LikeShare = sequelize.define("likeshare", {
 User.hasOne(UserPass)
 UserPass.belongsTo(User)
 
-User.hasMany(Todo, {
-  foreignKey: 'uid'
-})
+User.hasMany(Todo)
 Todo.belongsTo(User)
 
-User.hasMany(Dailylog, {
-  foreignKey: 'uid'
-})
+User.hasMany(Dailylog)
 Dailylog.belongsTo(User)
 
-User.hasMany(Share, {
-  foreignKey: 'uid'
-})
+User.hasMany(Share)
 Share.belongsTo(User)
 
 User.belongsToMany(Share, { through: 'LikeShare' })

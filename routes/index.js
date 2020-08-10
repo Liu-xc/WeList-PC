@@ -6,8 +6,7 @@ const shareRoutes = require('./share')
 const editRoutes = require('./edit')
 const todoRoutes = require('./todoList')
 const { UserPass, User } = require('../database/schema')
-const { Op, Sequelize } = require("sequelize")
-const sequelize = new Sequelize('mysql://root@localhost:3306/welist')
+const { Op } = require("sequelize")
 
 const router = new Router()
 
@@ -60,14 +59,15 @@ router.post('/login', async (ctx, next)=>{
 */
 router.post('/register', async (ctx, next)=>{
   const data = ctx.request.body.data
-  const uid = data.uid
-  // const pass = data.password
+  const uname = data.uname
+  const pass = data.password
 
   ;(async () => {
     await User.sync({ force: true })
     await UserPass.sync({ force: true })
     // 这里是代码
-    User.create({})
+    User.create({'uname': uname})
+    UserPass.create({'uname': uname, 'pass': pass})
   })()
 
   await next()
