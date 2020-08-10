@@ -2,11 +2,6 @@ const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = new Sequelize('mysql://root@localhost:3306/welist')
 
 const UserPass = sequelize.define("userpass", {
-  uid: {
-    primaryKey: true,
-    type: DataTypes.INTEGER,
-    unique: true
-  },
   pass: {
     type: DataTypes.TEXT
   }
@@ -14,9 +9,10 @@ const UserPass = sequelize.define("userpass", {
 
 const User = sequelize.define("user", {
   uid: {
-    type: DataTypes.TEXT,
+    type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   motto: {
     type: DataTypes.TEXT
@@ -121,20 +117,18 @@ const LikeShare = sequelize.define("likeshare", {
   }
 })
 
-User.hasOne(UserPass, {
-  foreignKey: 'uid'
-})
+User.hasOne(UserPass)
 UserPass.belongsTo(User)
 
 User.hasMany(Todo, {
   foreignKey: 'uid'
 })
-Todo.belongsTo(USer)
+Todo.belongsTo(User)
 
 User.hasMany(Dailylog, {
   foreignKey: 'uid'
 })
-Dailylog.belongsTo(USer)
+Dailylog.belongsTo(User)
 
 User.hasMany(Share, {
   foreignKey: 'uid'
