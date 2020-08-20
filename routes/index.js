@@ -19,7 +19,7 @@ router.get('/', async (ctx, next)=>{
 
 router.post('/login', async (ctx, next)=>{
   const data = ctx.request.body.data
-  const uid = data.uid
+  const uname = data.uname
   const pass = data.password
   /**
    * 到时候密码需要加密
@@ -29,12 +29,12 @@ router.post('/login', async (ctx, next)=>{
    * 通过则登录成功
    * 否则失败
   */
-  UserPass.findOne({
+  await UserPass.findOne({
     where: {
       [Op.and]: [
         {
-          'uid': {
-            [Op.eq]: uid
+          'userUname': {
+            [Op.eq]: uname
           }
         },
         {
@@ -44,6 +44,9 @@ router.post('/login', async (ctx, next)=>{
         }
       ]
     }
+  }).then((data)=>{
+    console.log(data)
+    ctx.body = data
   })
   await next()
 })
@@ -62,13 +65,21 @@ router.post('/register', async (ctx, next)=>{
   const uname = data.uname
   const pass = data.password
 
-  ;(async () => {
-    await User.sync({ force: true })
-    await UserPass.sync({ force: true })
-    // 这里是代码
-    User.create({'uname': uname})
-    UserPass.create({'uname': uname, 'pass': pass})
-  })()
+  await User.findOne({
+    where: {
+      'uname': {
+        [Op.eq]: uname
+      }
+    }
+  }).then((data)=>{
+    if (!data) {
+      return User.create({'uname': uname})
+    }
+  }).then(()=>{
+    UserPass.create({'userUname': uname, 'pass': pass})
+  }).then(()=>{
+    ctx.status = 200
+  })
 
   await next()
 })

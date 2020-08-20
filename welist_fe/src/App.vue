@@ -6,7 +6,7 @@
       <el-divider v-if="!logStatus"></el-divider>
       <span class="slogan">To The Future, Step by Step</span>
       <div class="user-info" v-if="logStatus">
-        <span class="uid">{{uid}}</span>
+        <span class="uid">{{userInfo.uname}}</span>
         <el-avatar
           class="avatar"
           size="small"
@@ -29,12 +29,12 @@ export default {
   },
   data () {
     return {
-      uid: '用户ID'
     }
   },
   computed: {
     ...mapGetters([
-      'logStatus'
+      'logStatus',
+      'userInfo'
     ])
   }
 }

@@ -17,4 +17,12 @@ function changeLogStatus (state, status) {
   state.logStatus = status
 }
 
-export { clearTITE, clearSITE, clearLITE, changeLogStatus }
+function changeUserInfo (state, info) {
+  state.userInfo = Object.assign(state.userInfo, info)
+}
+
+function clearUserInfo (state) {
+  state.userInfo = {}
+}
+
+export { clearTITE, clearSITE, clearLITE, changeLogStatus, changeUserInfo, clearUserInfo }

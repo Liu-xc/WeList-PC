@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import axios from 'axios'
 export default {
   name: 'EditTodoItem',
   data () {
@@ -75,9 +77,34 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
   methods: {
     onSubmit () {
-      console.log('submit!')
+      const uname = this.userInfo.uname
+      const title = this.form.title
+      const desc = this.form.desc
+      const stime = this.form.date[0].getTime()
+      const ddl = this.form.date[1].getTime()
+      const importance = this.form.imptLevel
+      axios.post('/edit/todoitem', {
+        data: {
+          uname,
+          title,
+          desc,
+          stime,
+          ddl,
+          importance
+        }
+      }).then((res) => {
+        const data = res.data
+        if (data) {
+          console.log(data)
+        }
+      })
     }
   }
 }

@@ -23,7 +23,7 @@
 <script>
 import LogListItem from './LogListItem'
 import HandleOrLike from './HandleOrLike'
-import TransTimeStamp from '../utils/transTimeStamp.js'
+import { transTimeStamp } from '../utils/handleTime.js'
 
 export default {
   name: 'LogList',
@@ -32,7 +32,7 @@ export default {
     HandleOrLike
   },
   mounted () {
-    TransTimeStamp(Date.now())
+    transTimeStamp(Date.now())
   },
   methods: {
     handleToggleStar () {

@@ -22,7 +22,7 @@ const User = sequelize.define("user", {
 })
 
 const UserPass = sequelize.define("userpass", {
-  uname: {
+  userUname: {
     primaryKey: true,
     type: DataTypes.STRING(15),
     references: {
@@ -41,20 +41,27 @@ const Todo = sequelize.define("todo", {
     primaryKey: true,
     autoIncrement: true
   },
+  userUname: {
+    type: DataTypes.STRING(15),
+    references: {
+      model: User,
+      key: 'uname'
+    }
+  },
   title: {
     type: DataTypes.TEXT
   },
   desc: {
     type: DataTypes.TEXT
   },
-  duration: {
-    type: DataTypes.DATE
+  stime: {
+    type: DataTypes.TEXT
+  },
+  ddl: {
+    type: DataTypes.TEXT
   },
   importance: {
     type: DataTypes.INTEGER
-  },
-  ctime: {
-    type: DataTypes.TEXT
   }
 })
 
@@ -117,6 +124,7 @@ Share.belongsTo(User)
 
 User.belongsToMany(Share, { through: 'LikeShare' })
 Share.belongsToMany(User, { through: 'LikeShare' })
+
 
 module.exports = {
   User,

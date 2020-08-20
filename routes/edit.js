@@ -1,6 +1,6 @@
 const Router = require('koa-router')
-const { User, Todo, Dailylog, Share } = require('../database/schema')
-const { Op } = require("sequelize")
+const { Op } = require('sequelize')
+const { Todo, Dailylog, Share } = require('../database/schema')
 const router = new Router()
 
 
@@ -15,15 +15,20 @@ router.post('/edit/todoitem', async (ctx, next)=>{
   const data = ctx.request.body.data
   const uname = data.uname
   const title = data.title
+  const desc = data.desc
+  const stime = data.stime
+  const ddl = data.ddl
+  const importance = data.importance
 
-  ;(async () => {
-    await User.sync({ force: true })
-    await Todo.sync({ force: true })
-    // 这里是代码
-    User.create({'uname': uname})
-    Todo.create({'userUname': uname, 'title': title})
-  })()
-
+  await Todo.create({'userUname': uname, 'title': title, 'desc': desc, 'stime': stime, 'ddl': ddl, 'importance': importance}).then(()=>{
+    Todo.findAll({
+      where: {
+        'userUname': uname
+      }
+    })
+  }).then(()=>{
+    ctx.status = 200
+  })
   await next()
 })
 
@@ -54,10 +59,9 @@ router.post('/edit/logitem', async (ctx, next)=>{
   const title = data.title
 
   ;(async () => {
-    await User.sync({ force: true })
-    await Dailylog.sync({ force: true })
+    // await User.sync({ force: false })
+    // await Dailylog.sync({ force: false })
     // 这里是代码
-    User.create({'uname': uname})
     Dailylog.create({'userUname': uname, 'title': title})
   })()
 
@@ -91,10 +95,9 @@ router.post('/edit/shareitem', async (ctx, next)=>{
   const title = data.title
 
   ;(async () => {
-    await User.sync({ force: true })
-    await Share.sync({ force: true })
+    // await User.sync({ force: false })
+    // await Share.sync({ force: false })
     // 这里是代码
-    User.create({'uname': uname})
     Share.create({'userUname': uname, 'title': title})
   })()
 

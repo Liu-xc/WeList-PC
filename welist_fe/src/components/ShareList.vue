@@ -14,7 +14,7 @@
 
 <script>
 import HandleOrLike from './HandleOrLike'
-import transTimeStamp from '../utils/transTimeStamp'
+import { transTimeStamp } from '../utils/handleTime'
 export default {
   name: 'ShareList',
   components: {

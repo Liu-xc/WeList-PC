@@ -1,6 +1,6 @@
 import { doubleDigits } from './handleNum.js'
 // time参数为设置是否返回解析出的时间，默认不返回，只返回日期
-export default function (timestamp, time = false) {
+function transTimeStamp (timestamp, time = false) {
   const date = new Date(timestamp)
   const y = date.getFullYear()
   const m = date.getMonth() + 1
@@ -15,3 +15,5 @@ export default function (timestamp, time = false) {
 
   return Str
 }
+
+export { transTimeStamp }

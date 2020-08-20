@@ -26,7 +26,6 @@ function checkPass (rule, value, callback) {
 
 function recheckPass (component) {
   const _that = component
-  console.log(_that.form)
   // 函数柯里化
   return (rule, value, callback) => {
     if (!value) {
