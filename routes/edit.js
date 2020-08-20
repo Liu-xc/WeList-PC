@@ -57,13 +57,11 @@ router.post('/edit/logitem', async (ctx, next)=>{
   const data = ctx.request.body.data
   const uname = data.uname
   const title = data.title
+  const content = data.content
 
-  ;(async () => {
-    // await User.sync({ force: false })
-    // await Dailylog.sync({ force: false })
-    // 这里是代码
-    Dailylog.create({'userUname': uname, 'title': title})
-  })()
+  await Dailylog.create({'userUname': uname, 'title': title, 'content': content}).then(()=>{
+    ctx.status = 200
+  })
 
   await next()
 })
@@ -93,13 +91,11 @@ router.post('/edit/shareitem', async (ctx, next)=>{
   const data = ctx.request.body.data
   const uname = data.uname
   const title = data.title
+  const content = data.content
 
-  ;(async () => {
-    // await User.sync({ force: false })
-    // await Share.sync({ force: false })
-    // 这里是代码
-    Share.create({'userUname': uname, 'title': title})
-  })()
+  await Share.create({'userUname': uname, 'title': title, 'content': content}).then(()=>{
+    ctx.status = 200
+  })
 
   await next()
 })
