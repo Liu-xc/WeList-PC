@@ -79,13 +79,8 @@ export default {
           password: this.form.password
         }
       }).then((res) => {
-        console.log(res.data)
-        const data = res.data
-        if (data) {
-          this.changeLogStatus(true)
-          this.changeUserInfo({
-            uname: data.userUname
-          })
+        if (res.status === 200) {
+          this._logSuccess(res.data)
         }
       })
     },
@@ -96,14 +91,22 @@ export default {
           password: this.form.password
         }
       }).then((res) => {
-        console.log(res.data)
         if (res.status === 200) {
-          this.changeLogStatus(true)
-          this.changeUserInfo({
-            uname: this.form.uname
-          })
+          this._logSuccess(res.data)
         }
       })
+    },
+    _logSuccess (data) {
+      if (data) {
+        this.changeLogStatus(true)
+        this.changeUserInfo({
+          uname: data.uname,
+          motto: data.motto,
+          email: data.email,
+          birthday: data.birthday,
+          sex: data.sex
+        })
+      }
     }
   }
 }

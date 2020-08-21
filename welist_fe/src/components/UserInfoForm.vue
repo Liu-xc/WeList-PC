@@ -24,8 +24,8 @@
         </el-form-item>
         <el-form-item label="性别">
           <el-select v-model="form.sex" placeholder="请选择性别">
-            <el-option label="男" value="0"></el-option>
-            <el-option label="女" value="1"></el-option>
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapGetters, mapMutations } from 'vuex'
 import { checkEmail } from '../utils/validators.js'
 
 export default {
@@ -60,10 +62,46 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
   methods: {
+    ...mapMutations([
+      'changeUserInfo'
+    ]),
     onSubmit () {
-      console.log('submit!')
+      axios.patch('/userinfo', {
+        data: {
+          uname: this.userInfo.uname,
+          motto: this.form.motto,
+          email: this.form.email,
+          birthday: this.form.birthday.getTime(),
+          sex: this.form.sex
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          const data = res.data
+          this.changeUserInfo({
+            uname: data.uname,
+            motto: data.motto,
+            email: data.email,
+            birthday: data.birthday,
+            sex: data.sex
+          })
+          this._setForm()
+        }
+      })
+    },
+    _setForm () {
+      const ts = parseInt(this.userInfo.birthday.toString())
+      this.form = Object.assign({}, this.userInfo)
+      this.form.birthday = new Date(ts).toUTCString()
     }
+  },
+  mounted () {
+    this._setForm()
   }
 }
 </script>

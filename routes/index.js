@@ -44,9 +44,20 @@ router.post('/login', async (ctx, next)=>{
         }
       ]
     }
-  }).then((data)=>{
-    console.log(data)
-    ctx.body = data
+  }).then((res)=>{
+    if (res) {
+      return User.findOne({
+        where: {
+          'uname': {
+            [Op.eq]: uname
+          }
+        }
+      })
+    }
+  }).then((res)=>{
+    if (res) {
+      ctx.body = res
+    }
   })
   await next()
 })
