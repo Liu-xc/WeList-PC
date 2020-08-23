@@ -16,4 +16,8 @@ function transTimeStamp (timestamp, time = false) {
   return Str
 }
 
-export { transTimeStamp }
+function overtime (start, end, minuets) {
+  return end - start > minuets * 60 * 1000
+}
+
+export { transTimeStamp, overtime }
