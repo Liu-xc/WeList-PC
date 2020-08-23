@@ -11,7 +11,12 @@ router.get('/share', async (ctx, next)=>{
    * 遍历将要返回的分享列表检查LikeShare表
    * 将用户喜欢的分享id与分享列表片段一起作为返回值返回
   */
-  console.log(ctx.url)
+  await Share.findAll().then((data)=>{
+    ctx.status = 200
+    ctx.body = data
+    console.log(data)
+  })
+
   await next()
 })
 

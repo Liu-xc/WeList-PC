@@ -22,7 +22,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import TodoList from '../components/TodoList'
 import LogList from '../components/LogList'
 import ShareList from '../components/ShareList'
@@ -41,7 +41,8 @@ export default {
         share: null,
         edit: null,
         mine: null
-      }
+      },
+      refreshIndent: 0.05
     }
   },
   computed: {
@@ -57,6 +58,11 @@ export default {
     Edit
   },
   methods: {
+    ...mapMutations([
+      'setLogList',
+      'setTodoList',
+      'setShareList'
+    ]),
     handleClickTodo () {
       /**
        * 点击这些tab时
@@ -65,12 +71,10 @@ export default {
        * 否则不做动作
        * 在组件内部也应该允许用户主动刷新
       */
-      console.log('todo')
       const st = this.lastClick.todo
       const et = Date.now()
       if (st) {
-        const ot = overtime(st, et, 0.05)
-        // localStorage.setItem()
+        const ot = overtime(st, et, this.refreshIndent)
         if (ot) {
           // 获取新的数据并保存到本地存储
           this._getTodoList()
@@ -84,6 +88,17 @@ export default {
     },
     handleClickShare () {
       console.log('share')
+      const st = this.lastClick.share
+      const et = Date.now()
+      if (st) {
+        const ot = overtime(st, et, this.refreshIndent)
+        if (ot) {
+          // 获取新的数据并保存到本地存储
+          this._getShareList()
+        }
+      } else {
+        this._getShareList()
+      }
     },
     handleClickEdit () {
       console.log('edit')
@@ -127,7 +142,16 @@ export default {
         if (res === 200 || res.data) {
           const data = res.data
           this._setUpdateTime('todo')
-          localStorage.setItem('todoList', data)
+          this.setTodoList(data)
+        }
+      })
+    },
+    _getShareList () {
+      axios.get('/share').then((res) => {
+        if (res === 200 || res.data) {
+          const data = res.data
+          this._setUpdateTime('share')
+          this.setShareList(data)
         }
       })
     }

@@ -12,6 +12,9 @@ export default new Vuex.Store({
     logItemToEdit: {},
     shareItemToEdit: {},
     userInfo: {},
+    todoList: [],
+    shareList: [],
+    logList: [],
     logStatus: false
   },
   mutations,

@@ -92,8 +92,15 @@ router.post('/edit/shareitem', async (ctx, next)=>{
   const uname = data.uname
   const title = data.title
   const content = data.content
+  const createTime = Date.now()
 
-  await Share.create({'userUname': uname, 'title': title, 'content': content}).then(()=>{
+  await Share.create({
+    'userUname': uname,
+    'title': title,
+    'content': content,
+    'createTime': createTime,
+    'updateTime': createTime
+  }).then(()=>{
     ctx.status = 200
   })
 

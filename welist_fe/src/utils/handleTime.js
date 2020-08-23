@@ -1,7 +1,7 @@
 import { doubleDigits } from './handleNum.js'
 // time参数为设置是否返回解析出的时间，默认不返回，只返回日期
 function transTimeStamp (timestamp, time = false) {
-  const date = new Date(timestamp)
+  const date = new Date(parseInt(timestamp))
   const y = date.getFullYear()
   const m = date.getMonth() + 1
   const d = date.getDate()
@@ -12,7 +12,6 @@ function transTimeStamp (timestamp, time = false) {
     const s = doubleDigits(date.getSeconds())
     Str += ` ${h}:${mm}:${s}`
   }
-
   return Str
 }
 

@@ -90,6 +90,12 @@ const Share = sequelize.define("share", {
   },
   content: {
     type: DataTypes.TEXT
+  },
+  createTime: {
+    type: DataTypes.TEXT
+  },
+  updateTime: {
+    type: DataTypes.TEXT
   }
 })
 

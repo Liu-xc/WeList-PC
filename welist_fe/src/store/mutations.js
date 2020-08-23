@@ -25,4 +25,26 @@ function clearUserInfo (state) {
   state.userInfo = {}
 }
 
-export { clearTITE, clearSITE, clearLITE, changeLogStatus, changeUserInfo, clearUserInfo }
+function setTodoList (state, todoList) {
+  state.todoList = todoList
+}
+
+function setShareList (state, shareList) {
+  state.shareList = shareList
+}
+
+function setLogList (state, logList) {
+  state.logList = logList
+}
+
+export {
+  clearTITE,
+  clearSITE,
+  clearLITE,
+  changeLogStatus,
+  changeUserInfo,
+  clearUserInfo,
+  setTodoList,
+  setShareList,
+  setLogList
+}
