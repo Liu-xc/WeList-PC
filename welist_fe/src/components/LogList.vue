@@ -10,7 +10,7 @@
         <el-card>
           <h4>{{item.title}}</h4>
           <p>{{item.content}}</p>
-          <handle-or-like @toggleStar="handleToggleStar"></handle-or-like>
+          <handle-or-like @toggleStar="handleToggleStar" :author="true"></handle-or-like>
         </el-card>
       </el-timeline-item>
     </el-timeline>

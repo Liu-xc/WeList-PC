@@ -1,3 +1,4 @@
+import { pushAndSort } from '../utils/listOrder'
 // clear todoItemToEdit
 function clearTITE (state) {
   state.todoItemToEdit = {}
@@ -26,15 +27,15 @@ function clearUserInfo (state) {
 }
 
 function setTodoList (state, todoList) {
-  state.todoList = todoList
+  state.todoList = pushAndSort(state.todoList, todoList)
 }
 
 function setShareList (state, shareList) {
-  state.shareList = shareList
+  state.shareList = pushAndSort(state.shareList, shareList)
 }
 
 function setLogList (state, logList) {
-  state.logList = logList
+  state.logList = pushAndSort(state.logList, logList)
 }
 
 export {
