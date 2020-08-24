@@ -84,10 +84,19 @@ export default {
       }
     },
     handleClickLog () {
-      console.log('log')
+      const st = this.lastClick.log
+      const et = Date.now()
+      if (st) {
+        const ot = overtime(st, et, this.refreshIndent)
+        if (ot) {
+          // 获取新的数据并保存到本地存储
+          this._getLogList()
+        }
+      } else {
+        this._getLogList()
+      }
     },
     handleClickShare () {
-      console.log('share')
       const st = this.lastClick.share
       const et = Date.now()
       if (st) {
@@ -143,6 +152,19 @@ export default {
           const data = res.data
           this._setUpdateTime('todo')
           this.setTodoList(data)
+        }
+      })
+    },
+    _getLogList () {
+      axios.get('/dailyLog', {
+        params: {
+          uname: this.userInfo.uname
+        }
+      }).then((res) => {
+        if (res === 200 || res.data) {
+          const data = res.data
+          this._setUpdateTime('log')
+          this.setLogList(data)
         }
       })
     },

@@ -58,8 +58,15 @@ router.post('/edit/logitem', async (ctx, next)=>{
   const uname = data.uname
   const title = data.title
   const content = data.content
+  const createTime = Date.now()
 
-  await Dailylog.create({'userUname': uname, 'title': title, 'content': content}).then(()=>{
+  await Dailylog.create({
+    'userUname': uname,
+    'title': title,
+    'content': content,
+    'createTime': createTime,
+    'updateTime': createTime
+  }).then(()=>{
     ctx.status = 200
   })
 

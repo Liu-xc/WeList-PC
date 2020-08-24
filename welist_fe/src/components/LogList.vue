@@ -1,18 +1,16 @@
 <template>
   <div>
     <el-timeline>
-      <el-timeline-item timestamp="2018/4/12" placement="top">
+      <el-timeline-item
+        :timestamp="item.createTime | transTimeStamp"
+        placement="top"
+        v-for="(item, index) of logList"
+        :key="index"
+      >
         <el-card>
-          <h4>更新 Github 模板</h4>
-          <p>王小虎 提交于 2018/4/12 20:46</p>
+          <h4>{{item.title}}</h4>
+          <p>{{item.content}}</p>
           <handle-or-like @toggleStar="handleToggleStar"></handle-or-like>
-        </el-card>
-      </el-timeline-item>
-      <el-timeline-item timestamp="2018/4/12" placement="top">
-        <el-card>
-          <h4>更新 Github 模板</h4>
-          <p>王小虎 提交于 2018/4/12 20:46</p>
-          <handle-or-like @edit="handleEdit" @delete="handleDelete" :author="true"></handle-or-like>
         </el-card>
       </el-timeline-item>
     </el-timeline>
@@ -23,16 +21,19 @@
 <script>
 import LogListItem from './LogListItem'
 import HandleOrLike from './HandleOrLike'
+import { mapGetters } from 'vuex'
 import { transTimeStamp } from '../utils/handleTime.js'
 
 export default {
   name: 'LogList',
+  computed: {
+    ...mapGetters([
+      'logList'
+    ])
+  },
   components: {
     LogListItem,
     HandleOrLike
-  },
-  mounted () {
-    transTimeStamp(Date.now())
   },
   methods: {
     handleToggleStar () {
@@ -44,6 +45,9 @@ export default {
     handleDelete () {
       console.log('delete')
     }
+  },
+  filters: {
+    transTimeStamp
   }
 }
 </script>

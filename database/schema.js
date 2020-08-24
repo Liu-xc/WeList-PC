@@ -76,6 +76,12 @@ const Dailylog = sequelize.define("dailylog", {
   },
   content: {
     type: DataTypes.TEXT
+  },
+  createTime: {
+    type: DataTypes.TEXT
+  },
+  updateTime: {
+    type: DataTypes.TEXT
   }
 })
 
