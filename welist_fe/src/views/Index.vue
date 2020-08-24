@@ -110,10 +110,8 @@ export default {
       }
     },
     handleClickEdit () {
-      console.log('edit')
     },
     handleClickMine () {
-      console.log('mine')
     },
     handleTabClick () {
       switch (this.activeName) {

@@ -62,6 +62,10 @@ const Todo = sequelize.define("todo", {
   },
   importance: {
     type: DataTypes.INTEGER
+  },
+  done: {
+    type: DataTypes.TINYINT,
+    default: 0
   }
 })
 
