@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const { Op } = require('sequelize')
 const { LikeShare, User, Share } = require('../database/schema')
 const router = new Router()
 
@@ -29,18 +30,32 @@ router.get('/likeshare', async (ctx, next)=>{
    * 如果有对应项则删除，返回不喜欢
    * 否则添加，返回喜欢
   */
-  const data = ctx.request.query
-  const uname = data.uname
-  const shareid = data.shareid
+  const params = ctx.request.query
+  const uname = params.uname
+  const shareid = params.shareid
 
-  ;(async () => {
-    await User.sync({ force: true })
-    await Share.sync({ force: true })
-    User.create({'uname': uname})
-    Share.create({'userUname': uname, 'title': "hello"})
-    await LikeShare.sync({ force: true })
-    LikeShare.create({'uname': uname, 'shareid': 1})
-  })()
+  await LikeShare.create({
+    'uname': uname,
+    'shareid': shareid
+  }).then(res => {
+    ctx.status = 200
+  })
+
+  await next()
+})
+
+router.get('/getLikeList', async (ctx, next)=>{
+  const uname = ctx.request.query.uname
+  await LikeShare.findAll({
+    where: {
+      'uname': {
+        [Op.eq]: uname
+      }
+    }
+  }).then((data)=>{
+    ctx.body = data
+    ctx.status = 200
+  })
 
   await next()
 })

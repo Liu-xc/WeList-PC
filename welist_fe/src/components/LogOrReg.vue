@@ -108,6 +108,11 @@ export default {
         })
       }
     }
+  },
+  mounted () {
+    this.form.uname = 'jack'
+    this.form.password = '123qweQ'
+    this.handleLogin()
   }
 }
 </script>

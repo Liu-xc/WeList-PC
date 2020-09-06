@@ -1,6 +1,5 @@
 function setOrderByCreateTime (list) {
   list = list.sort((a, b) => (parseInt(b.createTime) - parseInt(a.createTime)))
-  console.log(list)
   return list
 }
 
@@ -9,4 +8,4 @@ function pushAndSort (list1, list2) {
   return setOrderByCreateTime(list1)
 }
 
-export { pushAndSort }
+export { setOrderByCreateTime, pushAndSort }
