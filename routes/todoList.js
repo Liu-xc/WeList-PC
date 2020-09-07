@@ -27,4 +27,44 @@ router.get('/todoList', async (ctx, next)=>{
   await next()
 })
 
+router.post('/changeTodoStatus', async (ctx, next)=>{
+  const data = ctx.request.body.data
+  const movedList = data.movedList
+  const action = data.action
+  const len = movedList.length
+  const uname = data.uname
+
+  for (let i = 0; i < len; i++) {
+    const res = await Todo.findOne({
+      where: {
+        'todoid': {
+          [Op.eq]: movedList[i].todoid
+        }
+      }
+    })
+    if (res) {
+        console.log(res)
+        res.done = action
+        await res.save()
+      } else {
+        console.log('?')
+      }
+  }
+  console.log(len)
+  // 返回最新的todoList
+  const newTodoList = await Todo.findAll({
+    where: {
+      'userUname': {
+        [Op.eq]: uname
+      }
+    }
+  })
+
+  // console.log(newTodoList)
+
+  ctx.body = newTodoList
+  ctx.status = 200
+  await next()
+})
+
 module.exports = router
