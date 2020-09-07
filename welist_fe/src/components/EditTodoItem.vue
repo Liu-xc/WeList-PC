@@ -99,10 +99,14 @@ export default {
           ddl,
           importance
         }
-      }).then((res) => {
-        const data = res.data
-        if (data) {
-          console.log(data)
+      }).then(res => {
+        if (res.status === 200) {
+          this.form = {
+            title: '',
+            desc: '',
+            imptLevel: '',
+            date: ''
+          }
         }
       })
     }

@@ -41,6 +41,11 @@ export default {
           content: this.form.content,
           uname: this.userInfo.uname
         }
+      }).then(res => {
+        if (res.status === 200) {
+          this.form.title = ''
+          this.form.content = ''
+        }
       })
     }
   }
