@@ -51,6 +51,8 @@ export default {
     handleDeleteClick (event) {
       this.$emit('delete')
     }
+  },
+  mounted () {
   }
 }
 </script>

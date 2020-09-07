@@ -110,7 +110,7 @@ export default {
     }
   },
   mounted () {
-    this.form.uname = 'jack'
+    this.form.uname = 'hello'
     this.form.password = '123qweQ'
     this.handleLogin()
   }

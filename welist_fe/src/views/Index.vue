@@ -124,7 +124,7 @@ export default {
           break
         }
         case 'share': {
-          this.handleClickShare()
+          // this.handleClickShare()
           break
         }
         case 'edit': {
@@ -172,9 +172,13 @@ export default {
           const data = res.data
           this._setUpdateTime('share')
           this.setShareList(data)
+          // console.log(data, 'index')
         }
       })
     }
+  },
+  mounted () {
+    this.handleClickShare()
   }
 }
 </script>

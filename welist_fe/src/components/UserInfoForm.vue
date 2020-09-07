@@ -95,9 +95,13 @@ export default {
       })
     },
     _setForm () {
-      const ts = parseInt(this.userInfo.birthday.toString())
-      this.form = Object.assign({}, this.userInfo)
-      this.form.birthday = new Date(ts).toUTCString()
+      if (this.userInfo.birthday) {
+        const ts = parseInt(this.userInfo.birthday.toString())
+        this.form = Object.assign({}, this.userInfo)
+        this.form.birthday = new Date(ts).toUTCString()
+      } else {
+        this.form = Object.assign({}, this.userInfo)
+      }
     }
   },
   mounted () {

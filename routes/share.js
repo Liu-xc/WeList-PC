@@ -13,9 +13,8 @@ router.get('/share', async (ctx, next)=>{
    * 将用户喜欢的分享id与分享列表片段一起作为返回值返回
   */
   await Share.findAll().then((data)=>{
-    ctx.status = 200
     ctx.body = data
-    console.log(data)
+    ctx.status = 200
   })
 
   await next()
@@ -34,10 +33,39 @@ router.get('/likeshare', async (ctx, next)=>{
   const uname = params.uname
   const shareid = params.shareid
 
-  await LikeShare.create({
-    'uname': uname,
-    'shareid': shareid
-  }).then(res => {
+  // 查询数据库中是否有对应项
+  // 如果有就删除
+  // 否则新建
+
+  await LikeShare.findOne({
+    where: {
+      [Op.and]: [
+        {
+          'uname': uname
+        },
+        {
+          'shareid': shareid
+        }
+      ]
+    }
+  }).then(async res=>{
+    if (res) {
+      // 存在，需要删除
+      await res.destroy()
+    } else {
+      await LikeShare.create({
+        'uname': uname,
+        'shareid': shareid
+      })
+    }
+  }).then(async ()=>{
+    const likeList = await LikeShare.findAll({
+      where: {
+        'uname': uname
+      }
+    })
+    // console.log(likeList)
+    ctx.body = likeList
     ctx.status = 200
   })
 
