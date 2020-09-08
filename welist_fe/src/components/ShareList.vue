@@ -49,9 +49,10 @@ export default {
     /**
      * 获取用户喜欢的分享列表
     */
+
     await this._getShareList()
 
-    axios.get('/getLikeList', {
+    await axios.get('/getLikeList', {
       params: {
         uname: this.userInfo.uname
       }
@@ -114,7 +115,6 @@ export default {
       axios.get('/share').then((res) => {
         if (res === 200 || res.data) {
           const data = res.data
-          this.likeList = res.data
           this.setShareList(data)
         }
       })
