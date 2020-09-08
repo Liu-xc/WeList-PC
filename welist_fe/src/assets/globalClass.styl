@@ -54,9 +54,34 @@
 
 .el-transfer-panel
   width 400px !important
-  height auto
+  height 60vh !important
   min-height 300px
   max-height 760px
+
+  .el-transfer-panel__body
+    padding-top 35px
+    overflow-y scroll
+
+    .el-transfer-panel__filter
+      position absolute !important
+      background white
+      padding 15px 0
+      z-index 100
+      top 30px
+      left 0
+      right 0
+
+  .el-checkbox-group
+    overflow-y scroll !important
+
+  .el-transfer-panel__list.is-filterable
+    position absolute
+    top 45px
+    bottom 0
+    height 80%
+    left 0
+    right 0
+    padding-bottom 45px
 
 .el-transfer__buttons
   .el-transfer__button

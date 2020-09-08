@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="share-view">
     <el-timeline>
       <el-timeline-item
         placement="top"
@@ -123,4 +123,8 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.share-view
+  height 80vh
+  overflow-y scroll
+</style>

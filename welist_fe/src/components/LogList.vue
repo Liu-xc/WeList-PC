@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="log-view">
     <el-timeline>
       <el-timeline-item
         :timestamp="item.createTime | transTimeStamp"
@@ -52,4 +52,8 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.log-view
+  height 80vh
+  overflow-y scroll
+</style>
