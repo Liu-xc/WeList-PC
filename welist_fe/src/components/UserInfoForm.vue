@@ -1,5 +1,6 @@
 <template>
   <div>
+    <message :msg="msg" ref="message"></message>
     <el-col :span="12" :offset="1">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="座右铭" prop="motto">
@@ -41,11 +42,19 @@
 import axios from 'axios'
 import { mapGetters, mapMutations } from 'vuex'
 import { checkEmail } from '../utils/validators.js'
+import Message from './Message'
 
 export default {
   name: 'UserInfoForm',
+  components: {
+    Message
+  },
   data () {
     return {
+      msg: {
+        content: '',
+        type: ''
+      },
       form: {
         motto: '',
         email: '',
@@ -91,7 +100,14 @@ export default {
             sex: data.sex
           })
           this._setForm()
+          this.msg.content = '修改成功!'
+          this.msg.type = 'success'
+          this.$refs.message.open()
         }
+      }).catch(() => {
+        this.msg.content = '修改失败!'
+        this.msg.type = 'warning'
+        this.$refs.message.open()
       })
     },
     _setForm () {
