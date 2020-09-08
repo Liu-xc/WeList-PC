@@ -48,6 +48,36 @@ function setLikeList (state, likeList) {
   // }
 }
 
+function setShareItemToEdit (state, shareid) {
+  const len = state.shareList.length
+  for (let i = 0; i < len; i++) {
+    if (state.shareList[i].shareid === shareid) {
+      state.shareItemToEdit = state.shareList[i]
+      break
+    }
+  }
+}
+
+function setTodoItemToEdit (state, todoid) {
+  const len = state.todoList.length
+  for (let i = 0; i < len; i++) {
+    if (state.todoList[i].todoid === todoid) {
+      state.todoItemToEdit = state.todoList[i]
+      break
+    }
+  }
+}
+
+function setLogItemToEdit (state, logid) {
+  const len = state.logList.length
+  for (let i = 0; i < len; i++) {
+    if (state.logList[i].logid === logid) {
+      state.logItemToEdit = state.logList[i]
+      break
+    }
+  }
+}
+
 function _handleLikeList (state) {
   const shareLen = state.shareList.length
   const likeLen = state.likeList.length
@@ -88,5 +118,8 @@ export {
   setTodoList,
   setShareList,
   setLogList,
-  setLikeList
+  setLikeList,
+  setShareItemToEdit,
+  setTodoItemToEdit,
+  setLogItemToEdit
 }

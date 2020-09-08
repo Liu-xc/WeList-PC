@@ -1,13 +1,13 @@
 <template>
   <div class="edit-container">
-    <el-tabs type="card">
+    <el-tabs type="card" v-model="activeName">
       <el-tab-pane label="任务">
         <edit-todo-item></edit-todo-item>
       </el-tab-pane>
       <el-tab-pane label="日志">
         <edit-log-item></edit-log-item>
       </el-tab-pane>
-      <el-tab-pane label="分享">
+      <el-tab-pane name="share" label="分享">
         <edit-share-item></edit-share-item>
       </el-tab-pane>
     </el-tabs>
@@ -21,6 +21,12 @@ import EditShareItem from './EditShareItem'
 
 export default {
   name: 'Edit',
+  props: {
+    activeName: {
+      type: String,
+      default: 'share'
+    }
+  },
   components: {
     EditTodoItem,
     EditLogItem,

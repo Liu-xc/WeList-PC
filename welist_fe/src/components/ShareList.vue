@@ -124,7 +124,7 @@ export default {
     //   this.setShareList(this.shareList)
     // },
     handleEdit (shareid) {
-      console.log(shareid)
+      this.$emit('editShare', shareid)
     },
     handleDelete (shareid) {
       console.log(this.shareList.length)

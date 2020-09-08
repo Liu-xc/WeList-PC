@@ -8,10 +8,10 @@
         <log-list></log-list>
       </el-tab-pane>
       <el-tab-pane name="share" label="分享">
-        <share-list></share-list>
+        <share-list @editShare="handleEditShare"></share-list>
       </el-tab-pane>
       <el-tab-pane name="edit" label="编辑">
-        <edit></edit>
+        <edit :activeName="editTabActiveName"></edit>
       </el-tab-pane>
       <el-tab-pane name="mine" label="我的">
         <user-info-form></user-info-form>
@@ -34,6 +34,7 @@ export default {
   name: 'Index',
   data () {
     return {
+      editTabActiveName: '',
       activeName: 'todo',
       lastClick: {
         todo: null,
@@ -61,7 +62,8 @@ export default {
     ...mapMutations([
       'setLogList',
       'setTodoList',
-      'setShareList'
+      'setShareList',
+      'setShareItemToEdit'
     ]),
     handleClickTodo () {
       /**
@@ -138,6 +140,11 @@ export default {
           break
         }
       }
+    },
+    handleEditShare (shareid) {
+      this.setShareItemToEdit(shareid)
+      this.editTabActiveName = 'share'
+      this.activeName = 'edit'
     },
     _setUpdateTime (item) {
       this.lastClick[item] = Date.now()
