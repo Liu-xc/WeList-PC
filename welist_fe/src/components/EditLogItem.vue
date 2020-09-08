@@ -18,7 +18,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import Message from './Message'
 export default {
   name: 'EditLogItem',
@@ -43,6 +43,9 @@ export default {
     ])
   },
   methods: {
+    ...mapMutations([
+      'setLogList'
+    ]),
     onSubmit () {
       axios.post('/edit/logitem', {
         data: {
@@ -60,6 +63,7 @@ export default {
           this.msg.content = '添加成功!'
           this.msg.type = 'success'
           this.$refs.message.open()
+          this.setLogList(res.data)
         }
       }).catch(() => {
         this.msg.content = '添加失败!'

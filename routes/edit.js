@@ -27,6 +27,15 @@ router.post('/edit/todoitem', async (ctx, next)=>{
       }
     })
   }).then(()=>{
+    return Todo.findAll({
+      where: {
+        'userUname': {
+          [Op.eq]: uname
+        }
+      }
+    })
+  }).then((res)=>{
+    ctx.body = res
     ctx.status = 200
   })
   await next()
@@ -67,6 +76,15 @@ router.post('/edit/logitem', async (ctx, next)=>{
     'createTime': createTime,
     'updateTime': createTime
   }).then(()=>{
+    return Dailylog.findAll({
+      where: {
+        'userUname': {
+          [Op.eq]: uname
+        }
+      }
+    })
+  }).then((res)=>{
+    ctx.body = res
     ctx.status = 200
   })
 
@@ -108,6 +126,9 @@ router.post('/edit/shareitem', async (ctx, next)=>{
     'createTime': createTime,
     'updateTime': createTime
   }).then(()=>{
+    return Share.findAll()
+  }).then((res)=>{
+    ctx.body = res
     ctx.status = 200
   })
 

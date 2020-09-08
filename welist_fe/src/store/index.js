@@ -16,6 +16,7 @@ export default new Vuex.Store({
     shareList: [],
     logList: [],
     likeShareList: [],
+    likeList: [],
     logStatus: false
   },
   mutations,

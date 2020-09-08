@@ -18,7 +18,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import Message from './Message'
 export default {
   name: 'EditShareItem',
@@ -43,6 +43,9 @@ export default {
     ])
   },
   methods: {
+    ...mapMutations([
+      'setShareList'
+    ]),
     onSubmit () {
       axios.post('/edit/shareitem', {
         data: {
@@ -60,6 +63,7 @@ export default {
           this.msg.content = '添加成功!'
           this.msg.type = 'success'
           this.$refs.message.open()
+          this.setShareList(res.data)
         }
       }).catch(() => {
         this.msg.content = '添加失败!'

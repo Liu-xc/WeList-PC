@@ -97,17 +97,19 @@ export default {
       }
     },
     handleClickShare () {
-      const st = this.lastClick.share
-      const et = Date.now()
-      if (st) {
-        const ot = overtime(st, et, this.refreshIndent)
-        if (ot) {
-          // 获取新的数据并保存到本地存储
-          this._getShareList()
-        }
-      } else {
-        this._getShareList()
-      }
+      this._getShareList()
+
+      // const st = this.lastClick.share
+      // const et = Date.now()
+      // if (st) {
+      //   const ot = overtime(st, et, this.refreshIndent)
+      //   if (ot) {
+      //     // 获取新的数据并保存到本地存储
+      //     this._getShareList()
+      //   }
+      // } else {
+      //   this._getShareList()
+      // }
     },
     handleClickEdit () {
     },
@@ -178,7 +180,7 @@ export default {
     }
   },
   mounted () {
-    this.handleClickShare()
+    // this.handleClickShare()
   }
 }
 </script>

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import axios from 'axios'
 import Message from './Message'
 export default {
@@ -92,6 +92,9 @@ export default {
     ])
   },
   methods: {
+    ...mapMutations([
+      'setTodoList'
+    ]),
     onSubmit () {
       const uname = this.userInfo.uname
       const title = this.form.title
@@ -120,6 +123,7 @@ export default {
           this.msg.content = '添加成功!'
           this.msg.type = 'success'
           this.$refs.message.open()
+          this.setTodoList(res.data)
         }
       }).catch(() => {
         this.msg.content = '添加失败!'

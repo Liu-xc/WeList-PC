@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 const { Op } = require('sequelize')
-const { LikeShare, User, Share } = require('../database/schema')
+const { LikeShare,  Share } = require('../database/schema')
 const router = new Router()
 
 router.get('/share', async (ctx, next)=>{
@@ -83,6 +83,60 @@ router.get('/getLikeList', async (ctx, next)=>{
   }).then((data)=>{
     ctx.body = data
     ctx.status = 200
+  })
+
+  await next()
+})
+
+router.get('/deleteShare', async (ctx, next)=>{
+  // 当用户删除share时，删除所有的对应的likeshare项
+  // 然后删除对应的share项
+  const shareid = ctx.request.query.shareid
+  const uname = ctx.request.query.uname
+  let newShareList = []
+  let newLikeList = []
+
+  // 删除喜欢的记录
+  await LikeShare.findAll({
+    where: {
+      'shareid': {
+        [Op.eq]: shareid
+      }
+    }
+  }).then(async (res)=>{
+    for (item of res) {
+      await item.destroy()
+    }
+  }).then(()=>{
+    // 删除用户的分享
+    return Share.findOne({
+      where: {
+        'shareid': {
+          [Op.eq]: shareid
+        }
+      }
+    })
+  }).then((res)=>{
+      if (res) {
+        return res.destroy()
+      }
+  }).then(async (res)=>{
+    // 返回新的数据进行渲染
+    newLikeList = await LikeShare.findAll({
+      where: {
+        'uname': {
+          [Op.eq]: uname
+        }
+      }
+    })
+    newShareList = await Share.findAll()
+    ctx.body = {
+      newLikeList,
+      newShareList
+    }
+    ctx.status = 200
+  }).catch(()=>{
+    // donothing
   })
 
   await next()

@@ -13,5 +13,8 @@ export default {
   },
   logList: function (state) {
     return state.logList
+  },
+  likeList: function (state) {
+    return state.likeList
   }
 }
