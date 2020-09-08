@@ -1,5 +1,6 @@
 <template>
   <div>
+    <message :msg="msg" ref="message"></message>
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="标题">
         <el-input v-model="form.title"></el-input>
@@ -38,8 +39,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import axios from 'axios'
+import Message from './Message'
 export default {
   name: 'EditTodoItem',
+  components: {
+    Message
+  },
   data () {
     return {
       form: {
@@ -47,6 +52,10 @@ export default {
         desc: '',
         imptLevel: '',
         date: ''
+      },
+      msg: {
+        content: '',
+        type: ''
       },
       pickerOptions: {
         shortcuts: [{
@@ -107,7 +116,15 @@ export default {
             imptLevel: '',
             date: ''
           }
+          // 显示提示信息
+          this.msg.content = '添加成功!'
+          this.msg.type = 'success'
+          this.$refs.message.open()
         }
+      }).catch(() => {
+        this.msg.content = '添加失败!'
+        this.mes.type = 'warning'
+        this.$refs.message.open()
       })
     }
   }
