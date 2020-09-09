@@ -14,6 +14,7 @@
             @toggleStar="handleToggleStar"
             :author="true"
             @edit="handleEdit(item.logid)"
+            @delete="handleDelete(item.logid)"
           ></handle-or-like>
         </el-card>
       </el-timeline-item>
@@ -25,7 +26,8 @@
 <script>
 import LogListItem from './LogListItem'
 import HandleOrLike from './HandleOrLike'
-import { mapGetters } from 'vuex'
+import axios from 'axios'
+import { mapGetters, mapMutations } from 'vuex'
 import { transTimeStamp } from '../utils/handleTime.js'
 
 export default {
@@ -40,14 +42,24 @@ export default {
     HandleOrLike
   },
   methods: {
+    ...mapMutations([
+      'setLogList'
+    ]),
     handleToggleStar () {
       console.log('star')
     },
     handleEdit (logid) {
       this.$emit('editLog', logid)
     },
-    handleDelete () {
-      console.log('delete')
+    handleDelete (logid) {
+      // 删除对应的log
+      axios.delete('/deleteDailyLog', {
+        data: {
+          logid
+        }
+      }).then((res) => {
+        this.setLogList(res.data)
+      })
     }
   },
   filters: {
