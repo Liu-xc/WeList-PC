@@ -5,13 +5,13 @@
         <todo-list></todo-list>
       </el-tab-pane>
       <el-tab-pane name="log" label="日志">
-        <log-list></log-list>
+        <log-list @editLog="handleEditLog"></log-list>
       </el-tab-pane>
       <el-tab-pane name="share" label="分享">
         <share-list @editShare="handleEditShare"></share-list>
       </el-tab-pane>
       <el-tab-pane name="edit" label="编辑">
-        <edit :activeName="editTabActiveName"></edit>
+        <edit :activename="editTabActiveName"></edit>
       </el-tab-pane>
       <el-tab-pane name="mine" label="我的">
         <user-info-form></user-info-form>
@@ -63,7 +63,8 @@ export default {
       'setLogList',
       'setTodoList',
       'setShareList',
-      'setShareItemToEdit'
+      'setShareItemToEdit',
+      'setLogItemToEdit'
     ]),
     handleClickTodo () {
       /**
@@ -144,6 +145,11 @@ export default {
     handleEditShare (shareid) {
       this.setShareItemToEdit(shareid)
       this.editTabActiveName = 'share'
+      this.activeName = 'edit'
+    },
+    handleEditLog (logid) {
+      this.setLogItemToEdit(logid)
+      this.editTabActiveName = 'log'
       this.activeName = 'edit'
     },
     _setUpdateTime (item) {

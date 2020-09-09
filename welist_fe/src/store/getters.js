@@ -16,5 +16,14 @@ export default {
   },
   likeList: function (state) {
     return state.likeList
+  },
+  todoItemToEdit: function (state) {
+    return state.todoItemToEdit
+  },
+  shareItemToEdit: function (state) {
+    return state.shareItemToEdit
+  },
+  logItemToEdit: function (state) {
+    return state.logItemToEdit
   }
 }

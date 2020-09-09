@@ -8,9 +8,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    todoItemToEdit: {},
-    logItemToEdit: {},
-    shareItemToEdit: {},
+    todoItemToEdit: null,
+    logItemToEdit: null,
+    shareItemToEdit: null,
     userInfo: {},
     todoList: [],
     shareList: [],

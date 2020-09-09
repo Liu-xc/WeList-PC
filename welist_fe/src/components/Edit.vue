@@ -4,7 +4,7 @@
       <el-tab-pane label="任务">
         <edit-todo-item></edit-todo-item>
       </el-tab-pane>
-      <el-tab-pane label="日志">
+      <el-tab-pane name="log" label="日志">
         <edit-log-item></edit-log-item>
       </el-tab-pane>
       <el-tab-pane name="share" label="分享">
@@ -22,9 +22,19 @@ import EditShareItem from './EditShareItem'
 export default {
   name: 'Edit',
   props: {
-    activeName: {
-      type: String,
-      default: 'share'
+    activename: {
+      type: String
+    }
+  },
+  data () {
+    const activeName = this.activename
+    return {
+      activeName
+    }
+  },
+  watch: {
+    activename: function () {
+      this.activeName = this.activename
     }
   },
   components: {

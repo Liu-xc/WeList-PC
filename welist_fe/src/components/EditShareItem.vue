@@ -9,8 +9,8 @@
         <el-input type="textarea" v-model="form.content"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">分享</el-button>
-        <el-button>取消</el-button>
+        <el-button type="primary" @click="onSubmit">{{this.shareItemToEdit ? '修改': '分享'}}</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -39,20 +39,63 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'userInfo'
+      'userInfo',
+      'shareItemToEdit'
     ])
+  },
+  mounted () {
+
+  },
+  watch: {
+    shareItemToEdit: function () {
+      if (this.shareItemToEdit) {
+        this.form = {
+          title: this.shareItemToEdit.title,
+          content: this.shareItemToEdit.content
+        }
+      }
+    }
   },
   methods: {
     ...mapMutations([
-      'setShareList'
+      'setShareList',
+      'clearShareItemToEdit'
     ]),
+    // 点击取消按钮
+    onCancel () {
+      // 如果是在修改状态下，就删除修改内容
+      if (this.shareItemToEdit) {
+        this.clearShareItemToEdit()
+      }
+
+      this.form = {
+        title: '',
+        content: ''
+      }
+    },
     onSubmit () {
-      axios.post('/edit/shareitem', {
-        data: {
-          title: this.form.title,
-          content: this.form.content,
-          uname: this.userInfo.uname
-        }
+      // 判断shareItemToEdit是不是Null
+      // 如果不是Null就是修改接口patch
+      // 否则为新增接口post
+      const Method = this.shareItemToEdit ? 'PATCH' : 'POST'
+      const Text = this.shareItemToEdit ? '修改' : '添加'
+      // 添加不需要传id
+      // 修改需要传id
+      const data = {
+        title: this.form.title,
+        content: this.form.content,
+        uname: this.userInfo.uname
+      }
+      if (this.shareItemToEdit) {
+        Object.assign(data, {
+          shareid: this.shareItemToEdit.shareid
+        })
+      }
+      // 发起请求
+      axios({
+        method: Method,
+        url: '/edit/shareitem',
+        data
       }).then(res => {
         if (res.status === 200) {
           this.form = {
@@ -60,13 +103,16 @@ export default {
             content: ''
           }
           // 显示提示信息
-          this.msg.content = '添加成功!'
+          this.msg.content = `${Text}成功！`
           this.msg.type = 'success'
           this.$refs.message.open()
           this.setShareList(res.data)
+          if (this.shareItemToEdit) {
+            this.clearShareItemToEdit()
+          }
         }
       }).catch(() => {
-        this.msg.content = '添加失败!'
+        this.msg.content = `${Text}失败！`
         this.mes.type = 'warning'
         this.$refs.message.open()
       })

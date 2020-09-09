@@ -10,7 +10,11 @@
         <el-card>
           <h4>{{item.title}}</h4>
           <p>{{item.content}}</p>
-          <handle-or-like @toggleStar="handleToggleStar" :author="true"></handle-or-like>
+          <handle-or-like
+            @toggleStar="handleToggleStar"
+            :author="true"
+            @edit="handleEdit(item.logid)"
+          ></handle-or-like>
         </el-card>
       </el-timeline-item>
     </el-timeline>
@@ -39,8 +43,8 @@ export default {
     handleToggleStar () {
       console.log('star')
     },
-    handleEdit () {
-      console.log('edit')
+    handleEdit (logid) {
+      this.$emit('editLog', logid)
     },
     handleDelete () {
       console.log('delete')

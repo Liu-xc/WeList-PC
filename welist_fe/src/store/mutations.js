@@ -58,6 +58,10 @@ function setShareItemToEdit (state, shareid) {
   }
 }
 
+function clearShareItemToEdit (state) {
+  state.shareItemToEdit = null
+}
+
 function setTodoItemToEdit (state, todoid) {
   const len = state.todoList.length
   for (let i = 0; i < len; i++) {
@@ -68,6 +72,10 @@ function setTodoItemToEdit (state, todoid) {
   }
 }
 
+function clearTodoItemToEdit (state) {
+  state.todoItemToEdit = null
+}
+
 function setLogItemToEdit (state, logid) {
   const len = state.logList.length
   for (let i = 0; i < len; i++) {
@@ -76,6 +84,10 @@ function setLogItemToEdit (state, logid) {
       break
     }
   }
+}
+
+function clearLogItemToEdit (state) {
+  state.logItemToEdit = null
 }
 
 function _handleLikeList (state) {
@@ -121,5 +133,8 @@ export {
   setLikeList,
   setShareItemToEdit,
   setTodoItemToEdit,
-  setLogItemToEdit
+  setLogItemToEdit,
+  clearShareItemToEdit,
+  clearTodoItemToEdit,
+  clearLogItemToEdit
 }
