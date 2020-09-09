@@ -12,6 +12,7 @@
           size="small"
           src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
         ></el-avatar>
+        <el-button class="logout-btn" type="danger" size="small" circle>退出</el-button>
       </div>
     </header>
     <router-view class="container-70" v-if="logStatus" />
@@ -68,6 +69,15 @@ export default {
 
     .uid
       margin-right 0.4rem
+
+    .logout-btn
+      opacity 0
+      margin-left 5px
+      transition all 0.5s
+
+    &:hover
+      .logout-btn
+        opacity 1
 
 .page-header-flex
   display flex

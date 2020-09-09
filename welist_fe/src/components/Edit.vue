@@ -27,9 +27,8 @@ export default {
     }
   },
   data () {
-    const activeName = this.activename
     return {
-      activeName
+      activeName: ''
     }
   },
   watch: {

@@ -9,8 +9,8 @@
         <el-input type="textarea" v-model="form.content"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">发布</el-button>
-        <el-button>取消</el-button>
+        <el-button type="primary" @click="onSubmit">{{this.logItemToEdit ? '修改': '发布'}}</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -39,15 +39,58 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'userInfo'
+      'userInfo',
+      'logItemToEdit'
     ])
+  },
+  watch: {
+    logItemToEdit: function () {
+      if (this.logItemToEdit) {
+        this.form = {
+          title: this.logItemToEdit.title,
+          content: this.logItemToEdit.content
+        }
+      }
+    }
   },
   methods: {
     ...mapMutations([
-      'setLogList'
+      'setLogList',
+      'clearLogItemToEdit'
     ]),
+    // 点击取消按钮
+    onCancel () {
+      // 如果是在修改状态下，就删除修改内容
+      if (this.logItemToEdit) {
+        this.clearLogItemToEdit()
+      }
+
+      this.form = {
+        title: '',
+        content: ''
+      }
+    },
     onSubmit () {
-      axios.post('/edit/logitem', {
+      // 判断logItemToEdit是不是Null
+      // 如果不是Null就是修改接口patch
+      // 否则为新增接口post
+      const Method = this.logItemToEdit ? 'PATCH' : 'POST'
+      const Text = this.logItemToEdit ? '修改' : '添加'
+      // 添加不需要传id
+      // 修改需要传id
+      const data = {
+        title: this.form.title,
+        content: this.form.content,
+        uname: this.userInfo.uname
+      }
+      if (this.logItemToEdit) {
+        Object.assign(data, {
+          shareid: this.logItemToEdit.logid
+        })
+      }
+      axios({
+        method: Method,
+        url: '/edit/logitem',
         data: {
           title: this.form.title,
           content: this.form.content,
@@ -60,13 +103,16 @@ export default {
             content: ''
           }
           // 显示提示信息
-          this.msg.content = '添加成功!'
+          this.msg.content = `${Text}成功！`
           this.msg.type = 'success'
           this.$refs.message.open()
           this.setLogList(res.data)
+          if (this.logItemToEdit) {
+            this.clearLogItemToEdit()
+          }
         }
       }).catch(() => {
-        this.msg.content = '添加失败!'
+        this.msg.content = `${Text}失败！`
         this.mes.type = 'warning'
         this.$refs.message.open()
       })

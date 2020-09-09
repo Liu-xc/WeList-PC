@@ -14,10 +14,26 @@
         hasChecked: '${checked}/${total}'
       }"
         @change="handleChange"
+        @left-check-change="handleLeftCheck"
+        @right-check-change="handleRightChek"
         :data="list"
       >
-        <el-button class="transfer-footer" slot="left-footer" size="small">操作</el-button>
-        <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button>
+        <el-button
+          class="transfer-footer"
+          type="danger"
+          slot="left-footer"
+          size="small"
+          plain
+          @click="leftDelete"
+        >删除</el-button>
+        <el-button
+          class="transfer-footer"
+          type="danger"
+          slot="right-footer"
+          size="small"
+          plain
+          @click="rightDelete"
+        >删除</el-button>
       </el-transfer>
     </div>
     <todo-list-item></todo-list-item>
@@ -39,7 +55,9 @@ export default {
       doneList: [],
       renderFunc (h, option) {
         return <span class="">{option.label}</span>
-      }
+      },
+      leftChecked: [],
+      rightChecked: []
     }
   },
   computed: {
@@ -69,8 +87,29 @@ export default {
     }
   },
   methods: {
+    handleLeftCheck (value) {
+      const len = value.length
+      this.leftChecked = []
+      for (let i = 0; i < len; i++) {
+        this.leftChecked.push(this.todoList[value[i]])
+      }
+    },
+    handleRightChek (value) {
+      const len = value.length
+      this.rightChecked = []
+      for (let i = 0; i < len; i++) {
+        this.rightChecked.push(this.todoList[value[i]])
+      }
+    },
+    leftDelete () {
+      // 将leftchecked中的项删除
+      console.log(this.leftChecked)
+    },
+    rightDelete () {
+      // 将rightchecked中的项删除
+      console.log(this.rightChecked)
+    },
     handleChange (value, direction, movedKeys) {
-      console.log(value, direction, movedKeys)
       // 判断移动方向（left是取消完成，right是完成）
       // 获取movedKeys
       // 获取移动的项，并在数据库中修改其状态
