@@ -85,17 +85,13 @@ export default {
       }
       if (this.logItemToEdit) {
         Object.assign(data, {
-          shareid: this.logItemToEdit.logid
+          logid: this.logItemToEdit.logid
         })
       }
       axios({
         method: Method,
         url: '/edit/logitem',
-        data: {
-          title: this.form.title,
-          content: this.form.content,
-          uname: this.userInfo.uname
-        }
+        data
       }).then(res => {
         if (res.status === 200) {
           this.form = {
@@ -110,11 +106,14 @@ export default {
           if (this.logItemToEdit) {
             this.clearLogItemToEdit()
           }
+        } else {
+          this.msg.content = `${Text}失败！`
+          this.msg.type = 'warning'
+          this.$refs.message.open()
         }
-      }).catch(() => {
-        this.msg.content = `${Text}失败！`
-        this.mes.type = 'warning'
-        this.$refs.message.open()
+      }).catch((err) => {
+        console.log(err)
+        this.clearLogItemToEdit()
       })
     }
   }

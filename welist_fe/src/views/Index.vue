@@ -58,6 +58,9 @@ export default {
     UserInfoForm,
     Edit
   },
+  mounted () {
+    this.handleClickTodo()
+  },
   methods: {
     ...mapMutations([
       'setLogList',
@@ -191,9 +194,6 @@ export default {
         }
       })
     }
-  },
-  mounted () {
-    // this.handleClickShare()
   }
 }
 </script>

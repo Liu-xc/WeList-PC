@@ -1,5 +1,7 @@
 function setOrderByCreateTime (list) {
-  list = list.sort((a, b) => (parseInt(b.createTime) - parseInt(a.createTime)))
+  if (list.length) {
+    list = list.sort((a, b) => (parseInt(b.createTime) - parseInt(a.createTime)))
+  }
   return list
 }
 

@@ -101,7 +101,27 @@ router.patch('/edit/logitem', async (ctx, next)=>{
    * 并返回修改成功消息
    * 如果不存在则返回错误消息
   */
-  console.log(ctx.url)
+  const data = ctx.request.body
+  const logid = data.logid
+  const title = data.title
+  const content = data.content
+
+  await Dailylog.findOne({
+    where: {
+      'logid': {
+        [Op.eq]: logid
+      }
+    }
+  }).then((res)=>{
+    res.title = title
+    res.content = content
+    return res.save()
+  }).then(()=>{
+    return Dailylog.findAll()
+  }).then((res)=>{
+    ctx.body = res
+    ctx.status = 200
+  })
   await next()
 })
 
@@ -145,7 +165,27 @@ router.patch('/edit/shareitem', async (ctx, next)=>{
    * 并返回修改成功消息
    * 如果不存在则返回错误消息
   */
-  console.log(ctx.url)
+  const data = ctx.request.body
+  const shareid = data.shareid
+  const title = data.title
+  const content = data.content
+
+  await Share.findOne({
+    where: {
+      'shareid': {
+        [Op.eq]: shareid
+      }
+    }
+  }).then((res)=>{
+    res.title = title
+    res.content = content
+    return res.save()
+  }).then(()=>{
+    return Share.findAll()
+  }).then((res)=>{
+    ctx.body = res
+    ctx.status = 200
+  })
   await next()
 })
 
