@@ -42,7 +42,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import TodoListItem from './TodoListItem'
 export default {
   name: 'TodoList',
@@ -69,45 +69,66 @@ export default {
   watch: {
     todoList: function () {
       const len = this.todoList.length
-      const undoneList = []
+      const list = []
       const doneList = []
 
       for (let i = 0; i < len; i++) {
         if (this.todoList[i].done) {
           doneList.push(i)
         }
-        undoneList.push({
+        list.push({
           key: i,
           label: this.todoList[i].title
         })
       }
 
-      this.list = undoneList
+      this.list = list
       this.doneList = doneList
     }
   },
   methods: {
+    ...mapMutations([
+      'setTodoList'
+    ]),
     handleLeftCheck (value) {
       const len = value.length
       this.leftChecked = []
       for (let i = 0; i < len; i++) {
-        this.leftChecked.push(this.todoList[value[i]])
+        this.leftChecked.push(this.todoList[value[i]].todoid)
       }
     },
     handleRightChek (value) {
       const len = value.length
       this.rightChecked = []
       for (let i = 0; i < len; i++) {
-        this.rightChecked.push(this.todoList[value[i]])
+        this.rightChecked.push(this.todoList[value[i]].todoid)
       }
     },
     leftDelete () {
       // 将leftchecked中的项删除
-      console.log(this.leftChecked)
+      axios.post('/deleteTodoItem', {
+        data: {
+          delList: this.leftChecked,
+          uname: this.userInfo.uname
+        }
+      }).then((res) => {
+        this.setTodoList(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     },
     rightDelete () {
       // 将rightchecked中的项删除
-      console.log(this.rightChecked)
+      axios.post('/deleteTodoItem', {
+        data: {
+          delList: this.rightChecked,
+          uname: this.userInfo.uname
+        }
+      }).then((res) => {
+        this.setTodoList(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     },
     handleChange (value, direction, movedKeys) {
       // 判断移动方向（left是取消完成，right是完成）
@@ -136,7 +157,7 @@ export default {
           uname: this.userInfo.uname
         }
       }).then(res => {
-        console.log(res)
+        this.setTodoList(res.data)
       })
     },
     // 获取包含被修改的项的列表

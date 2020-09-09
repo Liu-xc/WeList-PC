@@ -67,4 +67,42 @@ router.post('/changeTodoStatus', async (ctx, next)=>{
   await next()
 })
 
+router.post('/deleteTodoItem', async (ctx, next)=>{
+  const data = ctx.request.body.data
+  const delList = data.delList
+  const uname = data.uname
+  const asyncList = []
+  const len = delList.length
+  for (let i = 0; i < len; i++) {
+    asyncList.push(
+      await Todo.findOne({
+        where: {
+          'todoid': {
+            [Op.eq]: delList[i]
+          }
+        }
+      }).then((res)=>{
+        return res.destroy()
+      })
+    )
+  }
+  await Promise.all(asyncList).then(()=>{
+    return Todo.findAll({
+      where: {
+        'userUname': {
+          [Op.eq]: uname
+        }
+      }
+    })
+  }).then((res)=>{
+      ctx.body = res
+      ctx.status = 200
+  }).catch((err)=>{
+    // donothing
+    console.log(err)
+  })
+  
+  await next()
+})
+
 module.exports = router
