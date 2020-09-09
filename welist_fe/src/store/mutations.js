@@ -24,6 +24,7 @@ function changeUserInfo (state, info) {
 
 function clearUserInfo (state) {
   state.userInfo = {}
+  state.logStatus = false
 }
 
 function setTodoList (state, todoList) {

@@ -12,7 +12,7 @@
           size="small"
           src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
         ></el-avatar>
-        <el-button class="logout-btn" type="danger" size="small" circle>退出</el-button>
+        <el-button class="logout-btn" type="danger" size="small" circle @click="handleLogOut">退出</el-button>
       </div>
     </header>
     <router-view class="container-70" v-if="logStatus" />
@@ -22,7 +22,7 @@
 
 <script>
 import LogOrReg from './components/LogOrReg'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -37,6 +37,14 @@ export default {
       'logStatus',
       'userInfo'
     ])
+  },
+  methods: {
+    ...mapMutations([
+      'clearUserInfo'
+    ]),
+    handleLogOut () {
+      this.clearUserInfo()
+    }
   }
 }
 </script>
